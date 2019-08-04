@@ -4,7 +4,7 @@ import smartpy as sp
 
 class ElectionMarket(sp.Contract):
     def __init__(self, admin):
-        self.init(administrator = admin, balances = sp.BigMap())
+        self.init(administrator = admin, balances = sp.Map(), points = sp.Map())
 
     # candidate - Name of new candidate to add to game
     # amount    - Initial amount of free tokens for the candiate
@@ -37,6 +37,17 @@ class ElectionMarket(sp.Contract):
         self.data.balances[params.candidate][sp.sender] += params.amount
         self.data.balances[params.candidate][self.data.administrator] -= params.amount
         self.data.balances["credits"][sp.sender] -= params.amount 
+      
+    # Points functionality disabled for now due to ongoing SmartPy fixes
+    # candidate - Which candidate's holders to reward
+    # numPoints - Points per token to award
+    #@sp.entryPoint
+    #def processEvent(self, params):
+    #    candidateMap = self.data.balances[params.candidate]
+    #    sp.for user in candidateMap:
+    #        sp.if user != self.data.administrator:
+    #            balance = candidateMap[user]
+    #            self.data.points[user] = self.data.points[user] + balance * params.points
     
     # candidate - Which candidate's tokens to buy
     # amount    - Amount of tokens to buy
